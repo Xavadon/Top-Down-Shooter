@@ -5,14 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(AnimatorHandler))]
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private float _shootingCooldown;
-    private bool _isCooldown;
+    [SerializeField] private float _shootingCooldown = 0.15f;
+    [SerializeField] private float _bulletSpeed = 50f;
     [SerializeField] private Transform[] _bulletSpawnPoints;
     [SerializeField] private Color _bulletColor;
     [SerializeField] private RandomSoundPlayer _shootSoudPlayer;
-
-    private AnimatorHandler _animatorHandler;
     [SerializeField] private Pool _bulletPool;
+
+    private bool _isCooldown; 
+    private AnimatorHandler _animatorHandler;
+
+    private void OnValidate()
+    {
+        if (_shootingCooldown <= 0) _shootingCooldown = 0.15f;
+        if (_bulletSpeed <= 0) _bulletSpeed = 50f;
+        if (_bulletColor.a == 0) _bulletColor.a = 255;
+    }
 
     private void Awake()
     {
@@ -36,7 +44,7 @@ public class PlayerShooting : MonoBehaviour
             _shootSoudPlayer?.PlaySound();
             for (int i = 0; i < _bulletSpawnPoints.Length; i++)
             {
-                CreateBullet(i).GetComponent<Rigidbody>().velocity = Quaternion.Euler(0, 90, 0) * transform.forward * 50;
+                CreateBullet(i);
             }
         }
     }
@@ -54,12 +62,13 @@ public class PlayerShooting : MonoBehaviour
 
     private PoolObject CreateBullet(int i)
     {
-        var bullet = _bulletPool.GetFreeElement(_bulletSpawnPoints[i].position);
-        bullet.GetComponent<Bullet>().EnemyBullet = false;
-        var trail = bullet.GetComponent<Bullet>().trailRenderer;
-        trail.startColor = _bulletColor;
-        trail.endColor = _bulletColor;
-        return bullet;
+        var poolObject = _bulletPool.GetFreeElement(_bulletSpawnPoints[i].position);
+        var bullet = poolObject.GetComponent<Bullet>();
+        bullet.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0, 90, 0) * transform.forward * _bulletSpeed;
+        bullet.EnemyBullet = false;
+        bullet.TrailRenderer.startColor = _bulletColor;
+        bullet.TrailRenderer.endColor = _bulletColor;
+        return poolObject;
     }
 
 }

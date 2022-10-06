@@ -283,8 +283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65d443e9bfba424091956e4f7826684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailRenderer: {fileID: 1274145053}
   _damage: 10
+  _bulletSpeed: 50
+  _trailRenderer: {fileID: 1274145053}
+  EnemyBullet: 0
 --- !u!114 &329867154071787190
 MonoBehaviour:
   m_ObjectHideFlags: 0

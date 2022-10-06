@@ -6,17 +6,16 @@ using UnityEngine;
 public class UnitHealth : MonoBehaviour, IDamageable, IHealable
 {
     [SerializeField] private float _maxHealth;
-    private float _currentHealth;
-
     [SerializeField] private bool _enemy = true;
-    public static Action EnemyDied;
     [SerializeField] private bool _player = false;
-    public static Action PlayerDied;
-    public event Action<float> HealthChanged;
-
-    [Space(height: 10)]
     [SerializeField] private RandomSoundPlayer _hurtSoundPlayer;
     [SerializeField] private RandomSoundPlayer _healSoundPlayer;
+
+    private float _currentHealth;
+
+    public static Action EnemyDied;
+    public static Action PlayerDied;
+    public event Action<float> HealthChanged;
 
     private void OnEnable()
     {

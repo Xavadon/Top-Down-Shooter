@@ -2204,6 +2204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootingCooldown: 0.15
+  _bulletSpeed: 50
   _bulletSpawnPoints:
   - {fileID: 513634633}
   - {fileID: 1810537678}
@@ -2310,13 +2311,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnRange: {x: 19, y: 3.143333, z: 10}
   _spawnDelay: 5
+  _enemyCount: 10
+  _spawnHealItemCountPerWave: 2
   _enemyPool:
   - {fileID: 789191949}
   - {fileID: 1430917084}
   - {fileID: 1760702712}
-  _enemyCount: 10
   _itemHealPool: {fileID: 1274025186}
-  _healItemCountPerWave: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

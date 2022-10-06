@@ -5,18 +5,25 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerLocomotion : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
     [SerializeField] private float _moveSpeed = 10;
+
+    private Rigidbody _rigidbody;
+    private Camera _camera;
 
     private void Start()
     {
+        _camera = Camera.main;
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        Move();
         RotateOnMouseRay();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     private Vector3 GetInput()
@@ -34,7 +41,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void RotateOnMouseRay()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit))
         {
             Vector3 difference = raycastHit.point - transform.position;

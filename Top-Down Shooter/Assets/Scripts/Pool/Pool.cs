@@ -12,7 +12,6 @@ public class Pool : MonoBehaviour
 
     [Space(height:10)]
     [SerializeField] private bool _autoExpand = true;
-
     [SerializeField] private List<PoolObject> _pool;
 
     private void Start()

@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class DefaultEnemyShooting : EnemyShooting
 {
-    [Space(height: 10)]
     [SerializeField] private float _shootingCooldown = 1;
-    private bool _isCooldown;
+    [SerializeField] private float _bulletSpeed = 50f;
     [SerializeField] private Transform[] _bulletSpawnPoints;
     [SerializeField] private Color _bulletColor;
 
+    private bool _isCooldown;
     private Pool _bulletPool;
     private AnimatorHandler _animatorHandler;
 
+    private void OnValidate()
+    {
+        if (_shootingCooldown <= 0) _shootingCooldown = 1;
+        if (_bulletSpeed <= 0) _bulletSpeed = 50f;
+        if (_bulletColor.a == 0) _bulletColor.a = 255;
+    }
 
     private void Start()
     {
@@ -28,7 +34,7 @@ public class DefaultEnemyShooting : EnemyShooting
             _animatorHandler.PlayTargetAnimation("Shoot");
             for (int i = 0; i < _bulletSpawnPoints.Length; i++)
             {
-                CreateBullet(i).GetComponent<Rigidbody>().velocity = transform.forward * 50;
+                CreateBullet(i);
             }
         }
     }
@@ -46,11 +52,12 @@ public class DefaultEnemyShooting : EnemyShooting
 
     private PoolObject CreateBullet(int i)
     {
-        var bullet = _bulletPool.GetFreeElement(_bulletSpawnPoints[i].position);
-        bullet.GetComponent<Bullet>().EnemyBullet = true;
-        var trail = bullet.GetComponent<Bullet>().trailRenderer;
-        trail.startColor = _bulletColor;
-        trail.endColor = _bulletColor;
-        return bullet;
+        var poolObject = _bulletPool.GetFreeElement(_bulletSpawnPoints[i].position);
+        var bullet = poolObject.GetComponent<Bullet>();
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * _bulletSpeed;
+        bullet.EnemyBullet = true;
+        bullet.TrailRenderer.startColor = _bulletColor;
+        bullet.TrailRenderer.endColor = _bulletColor;
+        return poolObject;
     }
 }

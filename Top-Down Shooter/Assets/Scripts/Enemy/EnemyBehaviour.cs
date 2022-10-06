@@ -9,9 +9,9 @@ public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField] private EnemyShooting _enemyShooting;
     [SerializeField] private float _shootingDistance = 3;
-
     [SerializeField] private float _rotationSpeed = 20;
     [SerializeField] private Transform _target;
+
     private NavMeshAgent _navMeshAgent;
 
     private void Start()
