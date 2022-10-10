@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AnimatorHandler))]
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private float _shootingCooldown = 0.15f;
+    [SerializeField] private float _shootCooldown = 0.15f;
     [SerializeField] private float _bulletSpeed = 50f;
     [SerializeField] private Transform[] _bulletSpawnPoints;
     [SerializeField] private Color _bulletColor;
@@ -14,10 +14,11 @@ public class PlayerShooting : MonoBehaviour
 
     private bool _isCooldown; 
     private AnimatorHandler _animatorHandler;
+    private WaitForSeconds _shootCooldownCoroutine;
 
     private void OnValidate()
     {
-        if (_shootingCooldown <= 0) _shootingCooldown = 0.15f;
+        if (_shootCooldown <= 0) _shootCooldown = 0.15f;
         if (_bulletSpeed <= 0) _bulletSpeed = 50f;
         if (_bulletColor.a == 0) _bulletColor.a = 255;
     }
@@ -25,6 +26,7 @@ public class PlayerShooting : MonoBehaviour
     private void Awake()
     {
         _animatorHandler = GetComponent<AnimatorHandler>();
+        _shootCooldownCoroutine = new WaitForSeconds(_shootCooldown);
     }
 
     private void Update()
@@ -39,7 +41,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (!_isCooldown)
         {
-            SetShootCooldown();
+            StartCoroutine(nameof(ShootCooldown));
             _animatorHandler.PlayTargetAnimation("Shoot");
             _shootSoudPlayer?.PlaySound();
             for (int i = 0; i < _bulletSpawnPoints.Length; i++)
@@ -49,14 +51,10 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    private void SetShootCooldown()
+    private IEnumerator ShootCooldown()
     {
         _isCooldown = true;
-        Invoke(nameof(ResetCooldown), _shootingCooldown);
-    }
-
-    private void ResetCooldown()
-    {
+        yield return _shootCooldownCoroutine;
         _isCooldown = false;
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DefaultEnemyShooting : EnemyShooting
 {
-    [SerializeField] private float _shootingCooldown = 1;
+    [SerializeField] private float _shootCooldown = 1;
     [SerializeField] private float _bulletSpeed = 50f;
     [SerializeField] private Transform[] _bulletSpawnPoints;
     [SerializeField] private Color _bulletColor;
@@ -12,10 +12,11 @@ public class DefaultEnemyShooting : EnemyShooting
     private bool _isCooldown;
     private Pool _bulletPool;
     private AnimatorHandler _animatorHandler;
+    private WaitForSeconds _shootCooldownCoroutine;
 
     private void OnValidate()
     {
-        if (_shootingCooldown <= 0) _shootingCooldown = 1;
+        if (_shootCooldown <= 0) _shootCooldown = 1;
         if (_bulletSpeed <= 0) _bulletSpeed = 50f;
         if (_bulletColor.a == 0) _bulletColor.a = 255;
     }
@@ -24,13 +25,14 @@ public class DefaultEnemyShooting : EnemyShooting
     {
         _animatorHandler = GetComponent<AnimatorHandler>();
         _bulletPool = BulletPoolSingleton.singleton.GetComponent<Pool>();
+        _shootCooldownCoroutine = new WaitForSeconds(_shootCooldown);
     }
 
     public override void Shoot()
     {
         if (!_isCooldown && _bulletPool)
         {
-            SetShootCooldown();
+            StartCoroutine(nameof(SetShootCooldown));
             _animatorHandler.PlayTargetAnimation("Shoot");
             for (int i = 0; i < _bulletSpawnPoints.Length; i++)
             {
@@ -39,14 +41,10 @@ public class DefaultEnemyShooting : EnemyShooting
         }
     }
 
-    private void SetShootCooldown()
+    private IEnumerator SetShootCooldown()
     {
         _isCooldown = true;
-        Invoke(nameof(ResetCooldown), _shootingCooldown);
-    }
-
-    private void ResetCooldown()
-    {
+        yield return _shootCooldownCoroutine;
         _isCooldown = false;
     }
 

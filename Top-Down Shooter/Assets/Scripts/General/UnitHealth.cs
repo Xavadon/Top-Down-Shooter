@@ -20,7 +20,7 @@ public class UnitHealth : MonoBehaviour, IDamageable, IHealable
     private void OnEnable()
     {
         _currentHealth = _maxHealth;
-        HealthChanged?.Invoke(1f);
+        if (HealthChanged != null) HealthChanged(1f);
     }
 
     public void ApplyDamage(float value)
@@ -48,14 +48,14 @@ public class UnitHealth : MonoBehaviour, IDamageable, IHealable
     private void ChangeHealth()
     {
         float currentHealthAsPercantage = (float)_currentHealth / _maxHealth;
-        HealthChanged?.Invoke(currentHealthAsPercantage);
+        if (HealthChanged != null) HealthChanged(currentHealthAsPercantage);
     }
 
     private void Death()
     {
-        HealthChanged?.Invoke(0);
+        if (HealthChanged != null) HealthChanged(0);
+        if (_enemy && EnemyDied != null) EnemyDied();
+        if (_player && PlayerDied != null) PlayerDied();
         gameObject.SetActive(false);
-        if(_enemy) EnemyDied?.Invoke();
-        if(_player) PlayerDied?.Invoke();
     }
 }

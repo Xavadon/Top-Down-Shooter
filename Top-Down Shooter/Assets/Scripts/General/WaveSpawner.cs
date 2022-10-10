@@ -5,17 +5,19 @@ using UnityEngine;
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private Vector3 _spawnRange;
-    [SerializeField] private float _spawnDelay = 5f;
+    [SerializeField] private float _enemySpawnDelay = 5f;
     [SerializeField] private int _enemyCount;
     [SerializeField] private int _spawnHealItemCountPerWave = 2;
     [SerializeField] private Pool[] _enemyPool;
     [SerializeField] private Pool _itemHealPool;
 
     private int _deadEnemyCount;
+    private WaitForSeconds _spawnDelay;
 
     private void Start()
     {
-        if (_enemyPool != null) Invoke(nameof(SpawnEnemies), _spawnDelay);
+        _spawnDelay = new WaitForSeconds(_enemySpawnDelay);
+        if (_enemyPool != null) StartCoroutine(nameof(SpawnEnemiesWithDelay));
     }
 
     private void OnEnable()
@@ -35,9 +37,15 @@ public class WaveSpawner : MonoBehaviour
         {
             _deadEnemyCount = 0;
             _enemyCount += 2;
-            if (_enemyPool != null) Invoke(nameof(SpawnEnemies), _spawnDelay);
+            if (_enemyPool != null) StartCoroutine(nameof(SpawnEnemiesWithDelay));
             if (_itemHealPool) SpawnItemHeal();
         }
+    }
+
+    private IEnumerator SpawnEnemiesWithDelay()
+    {
+        yield return _spawnDelay;
+        SpawnEnemies();
     }
 
     private void SpawnEnemies()
