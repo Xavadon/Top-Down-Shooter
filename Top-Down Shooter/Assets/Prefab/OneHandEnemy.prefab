@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4860198008054421589}
   - component: {fileID: 4860198008054421547}
   - component: {fileID: 4860198008054421546}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4860198008228740700}
   - component: {fileID: 4860198008228740690}
   - component: {fileID: 4860198008228740701}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4860198008466217683}
   - component: {fileID: 4860198008466217681}
   - component: {fileID: 4860198008466217680}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 4860198008483331908}
   - component: {fileID: 4860198008483331930}
   - component: {fileID: 4860198008483331909}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 4860198008688731800}
   - component: {fileID: 4860198008688731806}
   - component: {fileID: 4860198008688731801}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 4860198009060439563}
   - component: {fileID: 4860198009060439561}
   - component: {fileID: 4860198009060439560}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4860198009208131642}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 4860198009401718851}
   - component: {fileID: 4860198009401718849}
   - component: {fileID: 4860198009401718848}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -635,7 +635,7 @@ GameObject:
   - component: {fileID: 4860198009458126615}
   - component: {fileID: 4860198009458126614}
   - component: {fileID: -6490657426842771735}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: OneHandEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,6 +708,9 @@ MonoBehaviour:
   _shootingDistance: 20
   _rotationSpeed: 15
   _target: {fileID: 4860198009458126827}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &4860198009458126828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,7 +723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfb40067f6e58145bfb2564c45294f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootingCooldown: 1
+  _shootCooldown: 1
+  _bulletSpeed: 50
   _bulletSpawnPoints:
   - {fileID: 4860198009208131642}
   _bulletColor: {r: 1, g: 0, b: 0, a: 1}
@@ -808,7 +812,7 @@ GameObject:
   - component: {fileID: 4860198009616338604}
   - component: {fileID: 4860198009616338607}
   - component: {fileID: 4860198009616338606}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -914,7 +918,7 @@ GameObject:
   - component: {fileID: 4860198009718740472}
   - component: {fileID: 4860198009718740475}
   - component: {fileID: 4860198009718740474}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,7 +1017,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4860198009776820064}
   - component: {fileID: 4860198009776820065}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1069,7 +1073,7 @@ GameObject:
   - component: {fileID: 4860198010115513554}
   - component: {fileID: 4860198010115513552}
   - component: {fileID: 4860198010115513555}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1150,7 @@ GameObject:
   - component: {fileID: 4860198010192495514}
   - component: {fileID: 4860198010192495493}
   - component: {fileID: 4860198010192495515}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

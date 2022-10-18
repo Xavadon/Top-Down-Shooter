@@ -21,6 +21,12 @@ public class DefaultEnemyShooting : EnemyShooting
         if (_bulletColor.a == 0) _bulletColor.a = 255;
     }
 
+    private void OnDisable()
+    {
+        StopCoroutine(SetShootCooldown());
+        _isCooldown = false;
+    }
+
     private void Start()
     {
         _animatorHandler = GetComponent<AnimatorHandler>();

@@ -11,13 +11,18 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float _shootingDistance = 3;
     [SerializeField] private float _rotationSpeed = 20;
     [SerializeField] private Transform _target;
+    [SerializeField] private LayerMask _layerMask;
 
     private NavMeshAgent _navMeshAgent;
+
+    private void OnEnable()
+    {
+        _target = PlayerSingleton.singleton.transform;
+    }
 
     private void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _target = PlayerSingleton.singleton.transform;
     }
 
     private void Update()
@@ -45,15 +50,19 @@ public class EnemyBehaviour : MonoBehaviour
 
     private bool SeePlayer()
     {
-        int layerMask = 1 << 8;
-        layerMask = ~layerMask;
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, _layerMask)
             && hit.transform.gameObject.TryGetComponent<Player>(out Player player))
+        {
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             return true;
+        }
         else
+        {
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
             return false;
+        }
     }
 }
